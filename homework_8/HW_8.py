@@ -1,4 +1,6 @@
 # Глобальные переменные
+import time
+
 text_template = 'Пользователь {user} {sex}, {age} лет {verb} покупку на {prise} у.е. с {device} из браузера {browser}. Регион, из которого совершалась покупка: {place}'
 pass_to_table = 'web_clients_correct.csv'
 pass_to_result = 'result_file.txt'
@@ -80,6 +82,17 @@ def table_to_text_converter():
         except (IOError, PermissionError, FileNotFoundError, ValueError, UnicodeEncodeError) as exc:
             except_counter += 1
             print('- Ошибка записи строки в файл', exc)
+        try:
+            source_table.close()
+            result_file.close()
+        except (IOError, PermissionError, FileNotFoundError) as exc:
+            print('Оишбка закрытия файла!', exc)
+        finally:
+            print('ФАЙЛ СОПРОТИВЛЯЕТСЯ, НО МЫ СПРАВИМСЯ С ЕГО ЗАКРЫТИЕМ!!!')
+            time.sleep(3)
+            source_table.close()
+            result_file.close()
+
     # Симпатичный вывод отчёта об обработке
     return ('\nГотово! ' +
             '\n Обработано строк - ' +
