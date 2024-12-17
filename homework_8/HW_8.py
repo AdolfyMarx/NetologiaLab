@@ -82,17 +82,16 @@ def table_to_text_converter():
         except (IOError, PermissionError, FileNotFoundError, ValueError, UnicodeEncodeError) as exc:
             except_counter += 1
             print('- Ошибка записи строки в файл', exc)
-        try:
-            source_table.close()
-            result_file.close()
-        except (IOError, PermissionError, FileNotFoundError) as exc:
-            print('Оишбка закрытия файла!', exc)
-        finally:
-            print('ФАЙЛ СОПРОТИВЛЯЕТСЯ, НО МЫ СПРАВИМСЯ С ЕГО ЗАКРЫТИЕМ!!!')
-            time.sleep(3)
-            source_table.close()
-            result_file.close()
-
+    # Закрываем за собой файлы
+    try:
+        source_table.close()
+        result_file.close()
+        print('Файлы за собой закрыли!')
+    except (IOError, PermissionError, FileNotFoundError) as exc:
+        print('КОШМАР! ФАЙЛЫ СПОРОТИВЛЯЮТСЯ ЗАКРЯТИЮ, НО МЫ ИХ ВСЁ РАВНО ЗАКРОЕМ!!!', exc)
+        time.sleep(3)
+        source_table.close()
+        result_file.close()
     # Симпатичный вывод отчёта об обработке
     return ('\nГотово! ' +
             '\n Обработано строк - ' +
